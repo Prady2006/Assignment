@@ -5,6 +5,7 @@ const db_config = require('../config/database_config')
 
 
 const chat_log_schema = new Schema({
+    [db_config.MESSAGE]: {"type": String},
     [db_config.IS_SENT]: {"type": Boolean },
     [db_config.USER_ID]: {"type": String},
     [db_config.TIMESTAMP]: {"type": Date , default : Date.now() }

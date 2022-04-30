@@ -67,7 +67,7 @@ const get_chat = async (req, res) =>{
                 [db_config.TIMESTAMP]: -1
             }
         })
-        let result = await chat_log_model.aggregate(query);
+        let result = await chat_log_model.aggregate(query).allowDiskUse(true);
 
         let idx = result.findIndex(i => i._id == req.query.start)
         if(idx != -1){
