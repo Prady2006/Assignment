@@ -67,14 +67,23 @@ const get_chat = async (req, res) =>{
                 [db_config.TIMESTAMP]: -1
             }
         })
+        query.push({
+            "$match": {
+                "_id": {"$gt": mongoose.Types.ObjectId(req.query.start)}
+            }
+        })
+
+        query.push({
+            "$limit": fetch_count
+        })
         let result = await chat_log_model.aggregate(query).allowDiskUse(true);
 
-        let idx = result.findIndex(i => i._id == req.query.start)
-        if(idx != -1){
-            result = result.slice(idx , idx + fetch_count);
-        }else{
-            result = result.slice(0,   fetch_count )
-        }
+        // let idx = result.findIndex(i => i._id == req.query.start)
+        // if(idx != -1){
+        //     result = result.slice(idx , idx + fetch_count);
+        // }else{
+        //     result = result.slice(0,   fetch_count )
+        // }
         return res.status(200).json({
             success: true ,
             msg: 'Data Found',
