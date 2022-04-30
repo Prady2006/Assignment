@@ -131,11 +131,18 @@ const delete_chat = async (req , res) => {
             [db_config.USER_ID]: req.params.user,
             "_id" : mongoose.Types.ObjectId(req.params.msgid)
         });
-        return res.status(200).json({
-            success: true ,
-            msg:'Data deleted',
-            data: [r]
-        })
+        if(!r) {
+            return res.status(404).json({
+                success: false,
+                msg: 'Not found'
+            })
+        }else {
+                return res.status(200).json({
+                success: true ,
+                msg:'Data deleted',
+                data: [r]
+            })
+        }
     }catch(e){
         console.log(e)
         return res.status(500).json({
